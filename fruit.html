@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    li:hover{
+      color: red;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <h1>Frutas</h1>
+  <input type="text">
+  <ul></ul>
+  <script>
+    const ul= document.querySelector('ul');
+    const text = document.querySelector('input');
+
+    function addFruit(fruit){
+      const li = document.createElement('li')
+      li.textContent= fruit
+      return li
+    }
+
+    text.addEventListener("keypress",(e)=>{
+
+      if (e.key=="Enter") {
+        
+        ul.append(addFruit(text.value))
+        text.value=""
+        setFruitsInLocalStorage();
+      }
+    })
+
+    function setFruitsInLocalStorage() {
+      const fruits= [...ul.children].map(f =>f.textContent)
+      localStorage.fruits= JSON.stringify(fruits)
+    }
+
+    function getFruitFromLocalStorage() {
+      console.log("HOLA");
+      
+      let fruits =[]
+      if (localStorage.fruits) {
+        fruits= JSON.parse(localStorage.fruits)
+      }
+      fruits.forEach(f => ul.append(addFruit(f)));
+    }
+    getFruitFromLocalStorage()
+
+    ul.addEventListener("click",(e)=>{
+      if (e.target.tagName =="LI") {
+        e.target.remove();
+        setFruitsInLocalStorage();
+      }
+    })
+  </script>
+</body>
+</html>

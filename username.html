@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hola <span id="user">--</span></h1>
+  <button>Resetear</button>
+  <button id="random">Random</button>
+  <p>
+    <input type="color" name="" id="color">
+  </p>
+  <script>
+    const userSpan = document.getElementById('user');
+    const button = document.querySelector('button');
+    const color = document.getElementById('color');
+    const backgroundColor = document.querySelector('body');
+    const brandom = document.getElementById('random');
+    let random = false
+    let idrandom
+
+    
+    
+    brandom.onclick=randomColor
+    button.onclick=deleteName
+
+    function deleteName(){
+      localStorage.removeItem('name')
+      setName()
+    }
+    function setName(){
+    if (!localStorage.name) {
+      user = prompt('Dime tu nombre');
+      localStorage.setItem('name',user);
+      if (localStorage.name=="pepe") {
+      randomColor()
+      }
+      else{
+      random=true;
+      }
+    
+    }
+    randomColor()
+    
+    userSpan.textContent= localStorage.name;
+    }
+  setName()
+  if (localStorage.color) {
+    backgroundColor.style.backgroundColor=localStorage.color
+  }
+
+    color.addEventListener("input",(e) =>{
+      localStorage.color=color.value
+      backgroundColor.style.backgroundColor=localStorage.color
+
+    })
+    function getRandomColor() { const letters = '0123456789ABCDEF'; 
+    let color = '#'; for (let i = 0; i < 6; i++) { color += letters[Math.floor(Math.random() * 16)]; } return color; }
+    
+    function startInterval() { intervalId = setInterval(() => { document.body.style.backgroundColor = getRandomColor(); }, 1); } 
+    
+    function randomColor() { if (random) { clearInterval(intervalId); random = false; } 
+    else { startInterval(); random = true; } } // Iniciar el intervalo al cargar la página startInterval();
+  </script>
+</body>
+</html>
